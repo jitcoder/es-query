@@ -1,42 +1,51 @@
 {
-    "name": "es-query",
-    "displayName": "ES Query",
-    "description": "Query ElasticSearch from vscode",
-    "version": "0.0.1",
-    "publisher": "jitcoder",
-    "engines": {
-        "vscode": "^1.5.0"
-    },
-    "categories": [
-        "Other"
+  "name": "es-query",
+  "displayName": "ES Query",
+  "description": "Query ElasticSearch from vscode",
+  "version": "0.0.1",
+  "publisher": "jitcoder",
+  "engines": {
+    "vscode": "^1.5.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:esQuery.execute"
+  ],
+  "main": "./out/src/extension",
+  "contributes": {
+    "commands": [
+      {
+        "command": "esQuery.execute",
+        "title": "Execute ES Query"
+      },
+      {
+        "command": "esQuery.setHost",
+        "title": "Set ElasticSearch host"
+      }
     ],
-    "activationEvents": [
-        "onCommand:extension.sayHello"
-    ],
-    "main": "./out/src/extension",
-    "contributes": {
-        "commands": [{
-            "command": "extension.sayHello",
-            "title": "Hello World"
-        }],
-        "menus": {
-            "editor/context": [
-                {
-                    "command": "extension.sayHello"
-                }
-            ]
+    "menus": {
+      "editor/context": [
+        {
+          "command": "esQuery.execute"
         }
-    },
-    "scripts": {
-        "vscode:prepublish": "tsc -p ./",
-        "compile": "tsc -watch -p ./",
-        "postinstall": "node ./node_modules/vscode/bin/install"
-    },
-    "devDependencies": {
-        "typescript": "^2.0.3",
-        "vscode": "^1.0.0",
-        "mocha": "^2.3.3",
-        "@types/node": "^6.0.40",
-        "@types/mocha": "^2.2.32"
+      ]
     }
+  },
+  "scripts": {
+    "vscode:prepublish": "tsc -p ./",
+    "compile": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install"
+  },
+  "devDependencies": {
+    "typescript": "^2.0.3",
+    "vscode": "^1.0.0",
+    "mocha": "^2.3.3",
+    "@types/node": "^6.0.40",
+    "@types/mocha": "^2.2.32"
+  },
+  "dependencies": {
+    "request": "^2.79.0"
+  }
 }
