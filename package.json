@@ -1,74 +1,76 @@
 {
-  "name": "es-query",
-  "displayName": "ES Query",
-  "description": "Query ElasticSearch from vscode",
-  "version": "0.0.1",
-  "publisher": "jitcoder",
-  "images": "images/elasticsearch.png",
-  "galleryBanner": {
-    "color": "#4dffff",
-    "theme": "light"
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/jitcoder/es-query/issues",
-    "email": "sam@bytecodestudios.com"
-  },
-  "homepage": "https://github.com/jitcoder/es-query/blob/master/README.md",
-  "engines": {
-    "vscode": "^1.5.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/jitcoder/es-query.git"
-  },
-  "categories": [
-    "Other"
-  ],
-  "activationEvents": [
-    "onCommand:esQuery.execute",
-    "onCommand:esQuery.setHost"
-  ],
-  "main": "./out/src/extension",
-  "contributes": {
-    "commands": [
-      {
-        "command": "esQuery.execute",
-        "title": "Execute ElasticSearch Query",
-        "category": "ES"
-      },
-      {
-        "command": "esQuery.setHost",
-        "title": "Set ElasticSearch Host",
-        "category": "ES"
-      }
-    ],
-    "menus": {
-      "editor/context": [
-        {
-          "command": "esQuery.execute"
-        }
-      ]
+    "name": "es-query",
+    "displayName": "ES Query",
+    "description": "Query ElasticSearch from vscode",
+    "version": "0.0.2",
+    "publisher": "jitcoder",
+    "images": "images/elasticsearch.png",
+    "galleryBanner": {
+        "color": "#4dffff",
+        "theme": "light"
     },
-    "keybindings": [{
-      "command": "esQuery.execute",
-      "key": "ctrl+shift+e",
-      "mac": "cmd+shift+e"
-    }]
-  },
-  "scripts": {
-    "vscode:prepublish": "tsc -p ./",
-    "compile": "tsc -watch -p ./",
-    "postinstall": "node ./node_modules/vscode/bin/install"
-  },
-  "devDependencies": {
-    "typescript": "^2.0.3",
-    "vscode": "^1.0.0",
-    "mocha": "^2.3.3",
-    "@types/node": "^6.0.40",
-    "@types/mocha": "^2.2.32"
-  },
-  "dependencies": {
-    "request": "^2.79.0"
-  }
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/jitcoder/es-query/issues",
+        "email": "sam@bytecodestudios.com"
+    },
+    "homepage": "https://github.com/jitcoder/es-query/blob/master/README.md",
+    "engines": {
+        "vscode": "^1.5.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/jitcoder/es-query.git"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onCommand:esQuery.execute",
+        "onCommand:esQuery.setHost"
+    ],
+    "main": "./out/src/extension",
+    "contributes": {
+        "commands": [
+            {
+                "command": "esQuery.execute",
+                "title": "Execute ElasticSearch Query",
+                "category": "ES"
+            },
+            {
+                "command": "esQuery.setHost",
+                "title": "Set ElasticSearch Host",
+                "category": "ES"
+            }
+        ],
+        "menus": {
+            "editor/context": [
+                {
+                    "command": "esQuery.execute"
+                }
+            ]
+        },
+        "keybindings": [
+            {
+                "command": "esQuery.execute",
+                "key": "ctrl+shift+e",
+                "mac": "cmd+shift+e"
+            }
+        ]
+    },
+    "scripts": {
+        "vscode:prepublish": "tsc -p ./",
+        "compile": "tsc -watch -p ./",
+        "postinstall": "node ./node_modules/vscode/bin/install"
+    },
+    "devDependencies": {
+        "typescript": "^2.0.3",
+        "vscode": "^1.0.0",
+        "mocha": "^2.3.3",
+        "@types/node": "^6.0.40",
+        "@types/mocha": "^2.2.32"
+    },
+    "dependencies": {
+        "request": "^2.79.0"
+    }
 }
