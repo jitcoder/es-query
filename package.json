@@ -2,9 +2,9 @@
     "name": "es-query",
     "displayName": "ES Query",
     "description": "Query ElasticSearch from vscode",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "publisher": "jitcoder",
-    "images": "images/elasticsearch.png",
+    "icon": "images/elasticsearch.png",
     "galleryBanner": {
         "color": "#5f9bfc",
         "theme": "light"
