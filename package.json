@@ -5,8 +5,22 @@
   "version": "0.0.1",
   "publisher": "jitcoder",
   "images": "images/elasticsearch.png",
+  "galleryBanner": {
+    "color": "#4dffff",
+    "theme": "light"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jitcoder/es-query/issues",
+    "email": "sam@bytecodestudios.com"
+  },
+  "homepage": "https://github.com/jitcoder/es-query/blob/master/README.md",
   "engines": {
     "vscode": "^1.5.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jitcoder/es-query.git"
   },
   "categories": [
     "Other"
