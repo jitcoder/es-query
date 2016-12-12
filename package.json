@@ -11,18 +11,21 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:esQuery.execute"
+    "onCommand:esQuery.execute",
+    "onCommand:esQuery.setHost"
   ],
   "main": "./out/src/extension",
   "contributes": {
     "commands": [
       {
         "command": "esQuery.execute",
-        "title": "Execute ES Query"
+        "title": "Execute ElasticSearch Query",
+        "category": "ES"
       },
       {
         "command": "esQuery.setHost",
-        "title": "Set ElasticSearch host"
+        "title": "Set ElasticSearch Host",
+        "category": "ES"
       }
     ],
     "menus": {
@@ -31,7 +34,12 @@
           "command": "esQuery.execute"
         }
       ]
-    }
+    },
+    "keybindings": [{
+      "command": "esQuery.execute",
+      "key": "ctrl+shift+e",
+      "mac": "cmd+shift+e"
+    }]
   },
   "scripts": {
     "vscode:prepublish": "tsc -p ./",

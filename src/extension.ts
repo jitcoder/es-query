@@ -9,16 +9,20 @@ export function activate(context: vscode.ExtensionContext) {
   let resultsProvider = new ElasticSearchResultsProvider();
   const registration = vscode.workspace.registerTextDocumentContentProvider("es-query", resultsProvider);
 
-  let disposable = vscode.commands.registerCommand('esQuery.execute', () => {
+  context.subscriptions.push(vscode.commands.registerCommand('esQuery.execute', () => {
     const editor = vscode.window.activeTextEditor;
     const selection = editor.selection;
 
     const range = selection.with(selection.start, selection.end);
     const selectedCode = editor.document.getText(range);
     executeQuery(selectedCode, context, resultsProvider);
-  });
+  }));
 
-  context.subscriptions.push(disposable, registration);
+  context.subscriptions.push(vscode.commands.registerCommand('esQuery.setHost', () => {
+    setElasticSearchHost(context);
+  }));
+
+  context.subscriptions.push(registration);
 }
 
 function getLines(code: string):string[] {
@@ -102,7 +106,7 @@ async function executeQuery(code:string, context: vscode.ExtensionContext, resul
     json: query.body
   }, (error, response, body) => {
     if (error) {
-      vscode.window.showErrorMessage(error);
+      vscode.window.showErrorMessage(error.message);
     } else {
       let results = body;
       if (typeof body === "string" && body.startsWith('{')) {
