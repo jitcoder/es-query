@@ -6,6 +6,9 @@ ElasticSearch documentation.
 
 
 ## Features
+> Simply select text in your current document and either right-click "Execute ElasticSearch Query"
+or use the hotkey `ctrl/cmd + shift + e`
+
 ```
 GET _cat/indices
 ```
@@ -17,9 +20,6 @@ POST /messages/inbox
   "message": "Hello World!"
 }
 ```
-
-> Simply select the text query and either right-click "Execute ElasticSearch Query"
-or use the hotkey `ctrl/cmd + shift + e`
 
 ![Demo](images/demo.gif)
 
@@ -37,3 +37,9 @@ This extension contributes the following settings:
 ### 0.0.1
 
 Initial Release
+
+## Upcoming Features
+
+* Multi-line selected text
+* Autocomplete/Intellisense
+* Query validation
