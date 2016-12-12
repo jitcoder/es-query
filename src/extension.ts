@@ -25,15 +25,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(registration);
 }
 
-function getLines(code: string):string[] {
-  const sanitizedCode: string = code
-    .replace(/\r\n/g, "\n")
-    .replace(/\n\n/g, "\n")
-
-  return sanitizedCode.split("\n").map((line) => line.trim());
-}
-
-async function setElasticSearchHost(context: vscode.ExtensionContext) {
+async function setElasticSearchHost(context: vscode.ExtensionContext):Promise<string> {
   let options: vscode.InputBoxOptions;
 
   const host = await vscode.window.showInputBox(<vscode.InputBoxOptions>{
@@ -43,6 +35,7 @@ async function setElasticSearchHost(context: vscode.ExtensionContext) {
   });
 
   context.workspaceState.update("esQuery.host", host);
+  return new Promise<string>((resolve) => resolve(host));
 }
 
 interface ElasticSearchQuery {
@@ -85,7 +78,6 @@ function parseSearchQuery(code: string): ElasticSearchQuery | null {
 }
 
 async function executeQuery(code:string, context: vscode.ExtensionContext, resultsProvider: ElasticSearchResultsProvider) {
-  const lines = getLines(code);
   const host: string = context.workspaceState.get("esQuery.host", null) || await setElasticSearchHost(context);
   const query: ElasticSearchQuery = parseSearchQuery(code);
 
