@@ -34,6 +34,10 @@ This extension contributes the following settings:
 
 ## Release Notes
 
+### 0.0.5
+
+* Added query information to results pane  ([Reported Issue](https://github.com/jitcoder/es-query/issues/1))
+
 ### 0.0.1
 
 Initial Release
