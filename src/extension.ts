@@ -91,12 +91,19 @@ async function executeQuery(code:string, context: vscode.ExtensionContext, resul
     pathname: query.path,
     protocol: 'http'
   })
+  const sbi = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
+  sbi.text = "$(search) Querying...";
+  sbi.show();
+  const startTime = new Date().getTime();
 
   request(<request.UrlOptions & request.CoreOptions>{
     url: requestUrl,
     method: query.method,
     json: query.body
   }, (error, response, body) => {
+    sbi.dispose();
+    const endTime = new Date().getTime();
+
     if (error) {
       vscode.window.showErrorMessage(error.message);
     } else {
@@ -110,7 +117,14 @@ async function executeQuery(code:string, context: vscode.ExtensionContext, resul
       } else {
         results = body;
       }
+      results = `[Query Information]
 
+Requested Time  ${new Date(endTime).toLocaleString()}
+Time Taken      ${endTime - startTime}ms\n\n
+[Response]
+
+${results}
+`
       resultsProvider.update(results);
       // vscode.commands.executeCommand("vscode.previewHtml", resultsProvider.queryResultsUri, vscode.ViewColumn.Two, 'ElasticSearch Results');
       vscode.workspace.openTextDocument(resultsProvider.queryResultsUri)
