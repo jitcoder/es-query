@@ -68,11 +68,7 @@ function parseSearchQuery(code: string): ElasticSearchQuery | null {
     let body: Object;
 
     if (jsonBodyStart > -1) {
-      try {
-        body = JSON.parse(code.substring(jsonBodyStart));
-      } catch (e) {
-        body = null
-      }
+      body = code.substring(jsonBodyStart);
     }
 
     return <ElasticSearchQuery>{ method, path, body, search };
@@ -104,7 +100,7 @@ async function executeQuery(code: string, context: vscode.ExtensionContext, resu
   request(<request.UrlOptions & request.CoreOptions>{
     url: requestUrl,
     method: query.method,
-    json: query.body
+    body: query.body
   }, (error, response, body) => {
     sbi.dispose();
     const endTime = new Date().getTime();
@@ -122,6 +118,16 @@ async function executeQuery(code: string, context: vscode.ExtensionContext, resu
       } else {
         results = body;
       }
+
+      if (response.statusCode == 400) {
+        const matched = results.toString().match(/"line":\s*([0-9]+),/);
+        if (matched != null) {
+          const startLineIndex = code.split('\n').findIndex((line: string) => { return line.indexOf('{') > -1 });
+          const actualLineNumber = Number(matched[1]) + startLineIndex
+          results = results.toString().replace(RegExp('"line": ' + matched[1] + ',', 'g'), '"line": ' + actualLineNumber + ',')
+        }
+      }
+
       results = `[Query Information]
 
 Requested Time  ${new Date(endTime).toLocaleString()}
