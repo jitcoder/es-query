@@ -25,7 +25,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(registration);
 }
 
-async function setElasticSearchHost(context: vscode.ExtensionContext):Promise<string> {
+async function setElasticSearchHost(context: vscode.ExtensionContext): Promise<string> {
   let options: vscode.InputBoxOptions;
 
   const host = await vscode.window.showInputBox(<vscode.InputBoxOptions>{
@@ -41,6 +41,7 @@ async function setElasticSearchHost(context: vscode.ExtensionContext):Promise<st
 interface ElasticSearchQuery {
   method: string,
   path: string,
+  search: string,
   body: Object
 }
 
@@ -51,16 +52,18 @@ function parseSearchQuery(code: string): ElasticSearchQuery | null {
   if (!code.trim()) {
     return null;
   }
-  
+
   let matches = requestReg.exec(code);
   if (matches && matches.length > 1) {
     const method: string = matches[1].toUpperCase();
     const path: string = matches[2] || '';
+    const search: string = path.indexOf('?') === -1 ? '' : path.split('?')[1];
+
     const headers = {};
     while ((matches = headerReg.exec(code)) !== null) {
       headers[matches[1]] = matches[2];
     }
-    
+
     const jsonBodyStart: number = code.indexOf('{');
     let body: Object;
 
@@ -72,12 +75,12 @@ function parseSearchQuery(code: string): ElasticSearchQuery | null {
       }
     }
 
-    return <ElasticSearchQuery>{ method, path, body };
+    return <ElasticSearchQuery>{ method, path, body, search };
   }
   return null;
 }
 
-async function executeQuery(code:string, context: vscode.ExtensionContext, resultsProvider: ElasticSearchResultsProvider) {
+async function executeQuery(code: string, context: vscode.ExtensionContext, resultsProvider: ElasticSearchResultsProvider) {
   const host: string = context.workspaceState.get("esQuery.host", null) || await setElasticSearchHost(context);
   const query: ElasticSearchQuery = parseSearchQuery(code);
 
@@ -89,8 +92,10 @@ async function executeQuery(code:string, context: vscode.ExtensionContext, resul
   const requestUrl: string = url.format({
     host,
     pathname: query.path,
+    search: query.search,
     protocol: 'http'
-  })
+  });
+
   const sbi = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
   sbi.text = "$(search) Querying...";
   sbi.show();
@@ -128,7 +133,7 @@ ${results}
       resultsProvider.update(results);
       // vscode.commands.executeCommand("vscode.previewHtml", resultsProvider.queryResultsUri, vscode.ViewColumn.Two, 'ElasticSearch Results');
       vscode.workspace.openTextDocument(resultsProvider.queryResultsUri)
-        .then(doc =>  vscode.window.showTextDocument(doc, vscode.ViewColumn.Two, true));
+        .then(doc => vscode.window.showTextDocument(doc, vscode.ViewColumn.Two, true));
     }
   })
 }
