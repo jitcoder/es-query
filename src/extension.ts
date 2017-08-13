@@ -56,8 +56,10 @@ function parseSearchQuery(code: string): ElasticSearchQuery | null {
   let matches = requestReg.exec(code);
   if (matches && matches.length > 1) {
     const method: string = matches[1].toUpperCase();
-    const path: string = matches[2] || '';
-    const search: string = path.indexOf('?') === -1 ? '' : path.split('?')[1];
+    const uri = url.parse(matches[2]);
+
+    const path: string = uri.pathname || '';
+    const search: string = uri.search || null;
 
     const headers = {};
     while ((matches = headerReg.exec(code)) !== null) {

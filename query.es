@@ -1,0 +1,1 @@
+get _cat/indices

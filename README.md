@@ -4,6 +4,11 @@ Lets you run queries against ElasticSearch in the same format they show up in th
 ElasticSearch documentation.
 
 
+## Please note this extention has been abandoned in favor of a new extention that has been authored by ria.
+```
+ext install elastic
+```
+
 
 ## Features
 > Simply select text in your current document and either right-click "Execute ElasticSearch Query"
@@ -33,6 +38,11 @@ This extension contributes the following settings:
 ## Known Issues
 
 ## Release Notes
+
+### 0.0.6
+
+* fixed query string bug
+* error message handling enhancement by ([YusukeHosonuma] (https://github.com/jitcoder/es-query/pull/7)) 
 
 ### 0.0.5
 
